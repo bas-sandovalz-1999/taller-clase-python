@@ -1,0 +1,12 @@
+# ejercicio clases fundamento de programacion, Alumno: Bastian Sandoval
+# duoc me contrata para realizar un login en python, y ese login debe validar el usuario y la clave con lo que se vio en la clase
+
+print("Buenos dias, a continuacion debe ingresar primero su usuario")
+user = input ("ingrese su usuario: ")
+print(f"Hola {user}, ingrese ahora su clave")
+clave = input ("ingrese su clave: ")
+
+if user != clave:
+  print("cuenta valida")
+else:
+  print("cuenta no valida")
