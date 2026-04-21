@@ -1,0 +1,88 @@
+#act: hacer un ejercicio que contenga todos los temas aprendidos en clases (if/else, while/for, funciones, list, diccionary y tuplas)
+
+# registro de beneficos del estado para personas vulnerables que estudian, trabajan y sean mayores de 18 y menores de 35
+# condiciones a acceder a los beneficios: ingreso promedio per capita hogar igual o menor a 200.000, estar matriculado en la educacion superior, educion maxima del jefe de hogar es ed media completa y estar trabajando
+# deben cumplir si o si el de ingresos, estar trabando y estudiando y el requisito de edad
+# si el jefe de hogar su ed max es ed media, se le da una pension de alimentos de $50.000 mensual, independiente del resultado de las demas condiciones
+# se necesita saber el el nombre, el genero, los numeros de personas en el hogar, rut, educacion maxima alcanzada por el jefe de hogar, el ingreso mensual maximo y minimo por mes,
+
+ingresos = list()
+len_ingresos = int()
+registro = dict()
+user_data = None
+def registro_beneficio (key_list, value_list):
+  registro = dict(zip(key_list, value_list))
+  return registro
+
+while True:
+  print ("Bienvenido al registro de beneficios del estado")
+  print ("-----------------------------------------------")
+  print ("Eliga la opcion que desea realizar")
+  print ("-----------------------------------------------")
+  print ("1. Registrar Usuario del beneficio")
+  print ("2. Calculo del Beneficio")
+  print ("3. resultado del beneficio")
+  print ("4. Salir")
+  opcion = int (input ("Seleccione la opcion que desea: "))
+  try:
+    if opcion >= 1 and opcion <= 4:
+      if opcion == 1:
+        nombre = input ("Ingrese su nombre y apellido: ")
+        rut = input ("Ingrese su rut: ")
+        edad = int (input ("Ingrese su edad: "))
+        genero = input ("Ingrese su genero (masculino/femenino): ")
+        edu_max_jf_hogar = input ("Ingrese la educacion maxima alcanzada por el jefe de hogar (basica/media/superior): ")
+        cant_hogar = int (input ("Ingrese la cantidad de personas en el hogar (incluido usted): "))
+        matricula = input ("Esta matriculado en la educacion superior? (si/no): ")
+        sit_laboral = input ("Esta trabajando? (si/no): ")
+        for ingreso in range(4):
+          ingreso = float(input(f"Ingrese los ingresos liquidos mensuales de los ultimos 4 meses de su hogar, (mes {ingreso+1}): "))
+          if ingreso <= 560000 and cant_hogar > 4:
+            ingreso = 0
+          ingresos.append(ingreso)
+          len_ingresos = len(ingresos)
+        print (ingresos, len_ingresos)
+        sum_ingresos_hogar = float (sum(ingresos)/cant_hogar)
+        min_ingreso_hogar = float (min(ingresos))
+        max_ingreso_hogar = float (max(ingresos))
+        print (sum_ingresos_hogar, min_ingreso_hogar, max_ingreso_hogar)
+        list_value = [nombre, rut, edad, genero, edu_max_jf_hogar, cant_hogar, matricula, sit_laboral, sum_ingresos_hogar, min_ingreso_hogar, max_ingreso_hogar]
+        list_key = ["Nombre y apellido", "RUT", "Edad", "Genero", "Educacion maxima alcanzada por el jefe de hogar", "Personas en el hogar", "Matriculado en educacion superior", "Trabajando", "Ingreso mensual promedio por personas en el hogar", "Ingreso mensual minimo", "Ingreso mensual maximo"]
+        user_data = registro_beneficio(list_key, list_value)
+        print (user_data)
+
+      if opcion == 2:
+        if user_data == None:
+          print ("Debe registrarse primero")
+          continue
+        if user_data['Ingreso mensual promedio por personas en el hogar'] <= 200000 and user_data['Matriculado en educacion superior'] == 'si' and user_data['Trabajando'] == 'si'and user_data['Edad'] >= 18 and user_data['Edad'] <= 35:
+          entonces = "Puede acceder al beneficio del estado"
+        elif user_data['Educacion maxima alcanzada por el jefe de hogar'] == 'media' or user_data['Educacion maxima alcanzada por el jefe de hogar'] == "basica":
+          pension = "Se le da una pension de alimentos de $50.000 mensuales"
+        else:
+          entonces = "No puede acceder al beneficio del estado"
+          pension = "No accede a la pension de alimentos"
+        print (entonces, pension)
+
+      if opcion == 3:
+        if user_data == None:
+          print ("Debe registrarse primero")
+          continue
+        print (f"Bienvenido {user_data['Nombre y apellido']}\n",
+              "Acontinuacion se mostrara los resultados de su postulacion a los beneficios del estado y su informacion ingresada \n",
+              "--------------------------------------------Resultados e informacion--------------------------------------------- \n",
+              f"Nombre y Apellido: {user_data['Nombre y apellido']}\n",
+              f"RUT: {user_data['RUT']}\n",
+              f"Edad: {user_data['Edad']}\n",
+              f"Genero: {user_data['Genero']}\n",
+              f"Ingreso mensual promedio por personas en el hogar: {user_data['Ingreso mensual promedio por personas en el hogar']}\n",
+              f"Educacion maxima alcanzada por el jefe de hogar: {user_data['Educacion maxima alcanzada por el jefe de hogar']}\n",
+              f"Esta trabajando: {user_data['Trabajando']}\n",
+              f"Esta matriculado en la educacion superior: {user_data['Matriculado en educacion superior']}\n",
+              f"Resultado de la postulacion: ", entonces, "\n",
+              f"Resultado de la pension alimenticia: ", pension, "\n")
+
+      elif opcion == 4: break
+  except:
+    print ("Debe ingresar una opcion valida")
+print ("Gracias por usar el sistema")
